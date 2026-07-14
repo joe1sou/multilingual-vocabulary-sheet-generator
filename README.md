@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vocabulary Studio
 
-## Getting Started
+Vocabulary Studio is a standalone recruiter-ready prototype by Joe Ramses. It turns complete primary lesson materials into structured, illustrated multilingual vocabulary sheets.
 
-First, run the development server:
+The prepared demo uses a Grade 1 World Cup mathematics lesson. A teacher can also upload PDF, PowerPoint, or plain-text materials, choose Spanish, Arabic, French, or Simplified Chinese, optionally review the selected vocabulary, and export the finished A4 landscape sheet as PDF or editable PowerPoint.
+
+## Product behaviour
+
+- Analyses complete lesson text rather than selecting words from a title or first page.
+- Uses an EAL-aware structured prompt to select up to eight learner-critical terms.
+- Translates terms in lesson context through OpenRouter.
+- Generates one text-free illustration per term through OpenRouter, with up to four requests active concurrently.
+- Preserves successful cards when an illustration fails and supports individual retries.
+- Produces deterministic HTML, PDF, and editable PowerPoint layouts rather than one flattened AI worksheet image.
+- Keeps project state in the browser with IndexedDB. No application database is required.
+
+## AI defaults
+
+The text model defaults to `anthropic/claude-sonnet-4`.
+
+The image model defaults to `black-forest-labs/flux.2-klein-4b`, currently priced by OpenRouter at $0.014 per output megapixel. It is a lower-cost starting point than Gemini 3.1 Flash Lite Image and can be replaced through `OPENROUTER_IMAGE_MODEL` if illustration quality needs upgrading.
+
+Every API credential remains server-side. The image and text models are environment-variable choices, not hard-coded product dependencies.
+
+## Local setup
+
+Use Node.js 20.9 or newer.
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Add an OpenRouter key to `.env.local` as `OPENROUTER_API_KEY`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `OPENROUTER_API_KEY` | Server-only OpenRouter credential | required for live AI |
+| `OPENROUTER_TEXT_MODEL` | Vocabulary selection and translation model | `anthropic/claude-sonnet-4` |
+| `OPENROUTER_IMAGE_MODEL` | Illustration model | `black-forest-labs/flux.2-klein-4b` |
+| `GENERATION_ENABLED` | Emergency AI kill switch | `true` |
+| `NEXT_PUBLIC_IMAGE_CONCURRENCY` | Active illustration requests, clamped to 1-4 | `4` |
+| `NEXT_PUBLIC_APP_URL` | OpenRouter attribution URL | `http://localhost:3000` |
 
-## Learn More
+## Privacy model
 
-To learn more about Next.js, take a look at the following resources:
+- Uploaded files are processed by stateless route handlers and are not written to a project database.
+- Active project state, including generated image data, is stored only in the current browser's IndexedDB.
+- The **Clear project** action removes that local state.
+- Raw lesson content, filenames, translations, and generated images are excluded from analytics events.
+- Lesson content is sent to OpenRouter and its routed providers for processing; the interface states this clearly.
+- This prototype does not claim school-production compliance, GDPR certification, certified translation, or a completed safeguarding review.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Validation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The extraction tests use the bundled prepared PDF and PowerPoint files to verify complete-file processing.
