@@ -64,3 +64,7 @@ npm run build
 ```
 
 The extraction tests use the bundled prepared PDF and PowerPoint files to verify complete-file processing.
+
+## Website knowledge layer
+
+Use [docs/website-knowledge-layer-handover.md](docs/website-knowledge-layer-handover.md) as the canonical handover for portfolio or website copy. It separates verified product facts, the lesson-generation context, reusable messaging, claim boundaries, and future opportunities.
