@@ -18,7 +18,7 @@ The prepared demo uses a Grade 1 World Cup mathematics lesson. A teacher can als
 
 The text model defaults to `google/gemini-2.5-flash-lite`.
 
-The image model defaults to `black-forest-labs/flux.2-klein-4b`, currently priced by OpenRouter at $0.014 per output megapixel. It is a lower-cost starting point than Gemini 3.1 Flash Lite Image and can be replaced through `OPENROUTER_IMAGE_MODEL` if illustration quality needs upgrading.
+The image model defaults to `google/gemini-3.1-flash-lite-image` (Nano Banana 2 Lite) for child-friendly educational illustrations. It can be replaced through `OPENROUTER_IMAGE_MODEL` without changing the application code.
 
 Every API credential remains server-side. The image and text models are environment-variable choices, not hard-coded product dependencies.
 
@@ -40,7 +40,7 @@ Add an OpenRouter key to `.env.local` as `OPENROUTER_API_KEY`.
 | --- | --- | --- |
 | `OPENROUTER_API_KEY` | Server-only OpenRouter credential | required for live AI |
 | `OPENROUTER_TEXT_MODEL` | Vocabulary selection and translation model | `google/gemini-2.5-flash-lite` |
-| `OPENROUTER_IMAGE_MODEL` | Illustration model | `black-forest-labs/flux.2-klein-4b` |
+| `OPENROUTER_IMAGE_MODEL` | Illustration model | `google/gemini-3.1-flash-lite-image` |
 | `GENERATION_ENABLED` | Emergency AI kill switch | `true` |
 | `NEXT_PUBLIC_IMAGE_CONCURRENCY` | Active illustration requests, clamped to 1-4 | `4` |
 | `NEXT_PUBLIC_APP_URL` | OpenRouter attribution URL | `http://localhost:3000` |
