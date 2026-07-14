@@ -67,4 +67,7 @@ The extraction tests use the bundled prepared PDF and PowerPoint files to verify
 
 ## Website knowledge layer
 
-Use [docs/website-knowledge-layer-handover.md](docs/website-knowledge-layer-handover.md) as the canonical handover for portfolio or website copy. It separates verified product facts, the lesson-generation context, reusable messaging, claim boundaries, and future opportunities.
+Use these two documents together:
+
+- [docs/website-knowledge-layer-handover.md](docs/website-knowledge-layer-handover.md) is the canonical factual layer for the product, lesson-generation context, current scope, claims, and future opportunities.
+- [docs/website-case-study-handover.md](docs/website-case-study-handover.md) is the first-person product story covering ideation, quality benchmarks, the failed first image-model iteration, model and cost decisions, concurrent generation, and next-version thinking.
