@@ -71,3 +71,4 @@ Use these two documents together:
 
 - [docs/website-knowledge-layer-handover.md](docs/website-knowledge-layer-handover.md) is the canonical factual layer for the product, lesson-generation context, current scope, claims, and future opportunities.
 - [docs/website-case-study-handover.md](docs/website-case-study-handover.md) is the first-person product story covering ideation, quality benchmarks, the failed first image-model iteration, model and cost decisions, concurrent generation, and next-version thinking.
+- [docs/product-walkthrough-and-reflection-script.md](docs/product-walkthrough-and-reflection-script.md) is the timed spoken walkthrough, reflection, live-demo fallback script, and product-lead vocabulary guide.
