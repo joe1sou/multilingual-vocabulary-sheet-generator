@@ -16,7 +16,7 @@ The prepared demo uses a Grade 1 World Cup mathematics lesson. A teacher can als
 
 ## AI defaults
 
-The text model defaults to `anthropic/claude-sonnet-4`.
+The text model defaults to `google/gemini-2.5-flash-lite`.
 
 The image model defaults to `black-forest-labs/flux.2-klein-4b`, currently priced by OpenRouter at $0.014 per output megapixel. It is a lower-cost starting point than Gemini 3.1 Flash Lite Image and can be replaced through `OPENROUTER_IMAGE_MODEL` if illustration quality needs upgrading.
 
@@ -39,7 +39,7 @@ Add an OpenRouter key to `.env.local` as `OPENROUTER_API_KEY`.
 | Variable | Purpose | Default |
 | --- | --- | --- |
 | `OPENROUTER_API_KEY` | Server-only OpenRouter credential | required for live AI |
-| `OPENROUTER_TEXT_MODEL` | Vocabulary selection and translation model | `anthropic/claude-sonnet-4` |
+| `OPENROUTER_TEXT_MODEL` | Vocabulary selection and translation model | `google/gemini-2.5-flash-lite` |
 | `OPENROUTER_IMAGE_MODEL` | Illustration model | `black-forest-labs/flux.2-klein-4b` |
 | `GENERATION_ENABLED` | Emergency AI kill switch | `true` |
 | `NEXT_PUBLIC_IMAGE_CONCURRENCY` | Active illustration requests, clamped to 1-4 | `4` |
