@@ -49,6 +49,28 @@ function stripJsonFence(value: string) {
   return value.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
 }
 
+function structuredToolArguments(
+  message: {
+    content?: unknown;
+    tool_calls?: Array<{
+      function?: { name?: string; arguments?: string | Record<string, unknown> };
+    }>;
+  },
+  schemaName: string,
+) {
+  const toolCall = message.tool_calls?.find(
+    (call) => call.function?.name === schemaName,
+  );
+  const args = toolCall?.function?.arguments;
+
+  if (typeof args === "string") return JSON.parse(stripJsonFence(args)) as unknown;
+  if (args && typeof args === "object") return args;
+
+  const content = messageText(message.content);
+  if (content) return JSON.parse(stripJsonFence(content)) as unknown;
+  throw new Error("OpenRouter returned neither a structured tool call nor JSON content.");
+}
+
 async function callStructuredModel(
   messages: Array<{ role: "system" | "user" | "assistant"; content: string }>,
   schemaName: string,
@@ -79,9 +101,19 @@ async function callStructuredModel(
                 ],
           temperature: 0.15,
           max_tokens: 2_200,
-          response_format: {
-            type: "json_schema",
-            json_schema: { name: schemaName, strict: true, schema },
+          tools: [
+            {
+              type: "function",
+              function: {
+                name: schemaName,
+                description: "Return the requested validated structured result.",
+                parameters: schema,
+              },
+            },
+          ],
+          tool_choice: {
+            type: "function",
+            function: { name: schemaName },
           },
           provider: { require_parameters: true, data_collection: "deny" },
         }),
@@ -90,16 +122,29 @@ async function callStructuredModel(
 
       const payload = (await response.json()) as {
         error?: { message?: string };
-        choices?: Array<{ message?: { content?: unknown } }>;
+        choices?: Array<{
+          message?: {
+            content?: unknown;
+            tool_calls?: Array<{
+              function?: {
+                name?: string;
+                arguments?: string | Record<string, unknown>;
+              };
+            }>;
+          };
+        }>;
       };
 
       if (!response.ok) {
         throw new Error(payload.error?.message || `OpenRouter returned ${response.status}.`);
       }
 
-      const content = messageText(payload.choices?.[0]?.message?.content);
-      if (!content) throw new Error("OpenRouter returned an empty structured response.");
-      return { data: JSON.parse(stripJsonFence(content)) as unknown, model: config.textModel };
+      const message = payload.choices?.[0]?.message;
+      if (!message) throw new Error("OpenRouter returned an empty structured response.");
+      return {
+        data: structuredToolArguments(message, schemaName),
+        model: config.textModel,
+      };
     } catch (error) {
       lastError = error instanceof Error ? error : new Error("Structured generation failed.");
     } finally {
