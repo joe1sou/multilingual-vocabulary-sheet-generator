@@ -8,6 +8,7 @@ import "@fontsource/noto-sans-arabic/700.css";
 import "@fontsource/noto-sans-sc/400.css";
 import "@fontsource/noto-sans-sc/700.css";
 import "./globals.css";
+import { PrototypeSession } from "@/components/prototype-session";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}<Analytics /></body>
+      <body><PrototypeSession />{children}<Analytics /></body>
     </html>
   );
 }

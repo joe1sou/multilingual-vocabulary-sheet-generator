@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { track } from "@vercel/analytics";
+import { trackProductEvent as track } from "@/lib/product-analytics";
 import {
   ArrowRight,
   BookOpenText,
