@@ -462,6 +462,7 @@ Do not turn the case study into a catalogue of AI models. The stronger story is 
 ## 18. Canonical evidence
 
 - Factual handover: docs/website-knowledge-layer-handover.md
+- Spoken walkthrough: docs/product-walkthrough-and-reflection-script.md
 - Live app: https://multilingual-vocabulary-sheet-gener.vercel.app
 - Public repository: https://github.com/joe1sou/multilingual-vocabulary-sheet-generator
 - AI orchestration: src/lib/openrouter.ts
