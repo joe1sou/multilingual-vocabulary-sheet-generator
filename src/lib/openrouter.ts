@@ -5,7 +5,7 @@ import { analysisResponseSchema, vocabularyItemSchema } from "@/lib/schemas";
 import type { TargetLanguage } from "@/lib/types";
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1";
-const DEFAULT_TEXT_MODEL = "anthropic/claude-sonnet-4";
+const DEFAULT_TEXT_MODEL = "google/gemini-2.5-flash-lite";
 const DEFAULT_IMAGE_MODEL = "black-forest-labs/flux.2-klein-4b";
 
 function getConfig() {
