@@ -18,6 +18,8 @@
 
 Use this document to amend existing website copy about Vocabulary Studio.
 
+For the first-person product story—including ideation, the first image-model failure, quality benchmarks, model cost decisions, image concurrency, and next-version thinking—use website-case-study-handover.md alongside this factual layer.
+
 Treat the following sections as the source of truth:
 
 1. **Verified product facts** describes what is working now.
@@ -390,6 +392,7 @@ Before publishing revised website copy, confirm that it:
 - Live app: https://multilingual-vocabulary-sheet-gener.vercel.app
 - GitHub repository: https://github.com/joe1sou/multilingual-vocabulary-sheet-generator
 - Repository README: README.md
+- Product-process narrative: docs/website-case-study-handover.md
 - Original implementation PRD: multilingual_vocabulary_sheet_generator_PRD.md in the project source materials
 - Prepared demo assets: public/demo/
 - AI orchestration: src/lib/openrouter.ts
