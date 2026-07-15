@@ -51,11 +51,11 @@ if (key) {
         app_key: "vocabulary-studio",
         environment: process.env.NODE_ENV !== "production" ? "development" : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" ? "preview" : "production",
       });
-      const analyticsWindow = window as Window & { __posthogUiClickCleanup?: () => void };
-      analyticsWindow.__posthogUiClickCleanup?.();
-      analyticsWindow.__posthogUiClickCleanup = installUiClickTracking((properties) => {
-        client.capture("ui element clicked", properties);
-      });
     },
+  });
+  const analyticsWindow = window as Window & { __posthogUiClickCleanup?: () => void };
+  analyticsWindow.__posthogUiClickCleanup?.();
+  analyticsWindow.__posthogUiClickCleanup = installUiClickTracking((properties) => {
+    posthog.capture("ui element clicked", properties);
   });
 }
