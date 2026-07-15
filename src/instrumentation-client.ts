@@ -1,4 +1,5 @@
 import posthog, { type CaptureResult } from "posthog-js";
+import { installUiClickTracking } from "./lib/ui-click-tracking";
 
 const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 
@@ -45,9 +46,16 @@ if (key) {
     mask_all_text: true,
     mask_all_element_attributes: true,
     before_send: sanitize,
-    loaded: (client) => client.register({
-      app_key: "vocabulary-studio",
-      environment: process.env.NODE_ENV !== "production" ? "development" : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" ? "preview" : "production",
-    }),
+    loaded: (client) => {
+      client.register({
+        app_key: "vocabulary-studio",
+        environment: process.env.NODE_ENV !== "production" ? "development" : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" ? "preview" : "production",
+      });
+      const analyticsWindow = window as Window & { __posthogUiClickCleanup?: () => void };
+      analyticsWindow.__posthogUiClickCleanup?.();
+      analyticsWindow.__posthogUiClickCleanup = installUiClickTracking((properties) => {
+        client.capture("ui element clicked", properties);
+      });
+    },
   });
 }
